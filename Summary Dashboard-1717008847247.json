@@ -1,16 +1,30 @@
 {
   "__inputs": [
     {
-      "name": "DS_WAZUH_- CONTEGO LAB",
-      "label": "Wazuh - contego lab",
+      "name": "DS_WAZUH_INDEXER - CONTEGO",
+      "label": "Wazuh Indexer - Contego",
       "description": "",
       "type": "datasource",
       "pluginId": "elasticsearch",
       "pluginName": "Elasticsearch"
+    },
+    {
+      "name": "DS_ZABBIX",
+      "label": "Zabbix",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "alexanderzobnin-zabbix-datasource",
+      "pluginName": "Zabbix"
     }
   ],
   "__elements": {},
   "__requires": [
+    {
+      "type": "datasource",
+      "id": "alexanderzobnin-zabbix-datasource",
+      "name": "Zabbix",
+      "version": "1.0.0"
+    },
     {
       "type": "datasource",
       "id": "elasticsearch",
@@ -24,6 +38,12 @@
       "version": ""
     },
     {
+      "type": "panel",
+      "id": "geomap",
+      "name": "Geomap",
+      "version": ""
+    },
+    {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
@@ -34,12 +54,6 @@
       "id": "logs",
       "name": "Logs",
       "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "netsage-sankey-panel",
-      "name": "Sankey Panel",
-      "version": "1.1.1"
     },
     {
       "type": "panel",
@@ -78,15 +92,15 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "graphTooltip": 0,
+  "graphTooltip": 2,
   "id": null,
   "links": [],
-  "liveNow": false,
+  "liveNow": true,
   "panels": [
     {
       "datasource": {
         "type": "elasticsearch",
-        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+        "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
       },
       "fieldConfig": {
         "defaults": {
@@ -120,7 +134,7 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 3,
+        "w": 2,
         "x": 0,
         "y": 0
       },
@@ -158,7 +172,7 @@
           ],
           "datasource": {
             "type": "elasticsearch",
-            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+            "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
           },
           "metrics": [
             {
@@ -178,7 +192,93 @@
     {
       "datasource": {
         "type": "elasticsearch",
-        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+        "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 2,
+        "y": 0
+      },
+      "id": 43,
+      "links": [],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "agent_name:$agent_name AND rule_level:>=11",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "Critical",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
       },
       "fieldConfig": {
         "defaults": {
@@ -317,9 +417,9 @@
         ]
       },
       "gridPos": {
-        "h": 10,
+        "h": 14,
         "w": 7,
-        "x": 3,
+        "x": 4,
         "y": 0
       },
       "id": 31,
@@ -353,7 +453,7 @@
           ],
           "datasource": {
             "type": "elasticsearch",
-            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+            "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
           },
           "metrics": [
             {
@@ -361,7 +461,7 @@
               "type": "count"
             }
           ],
-          "query": "(rule_level:>=12 OR syslog_level:ALERT) AND agent_name:$agent_name AND rule_level:$rule_level NOT rule_id:60109",
+          "query": "agent_name:$agent_name AND rule_level:$rule_level",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -380,12 +480,12 @@
     {
       "datasource": {
         "type": "elasticsearch",
-        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+        "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
       },
       "gridPos": {
-        "h": 19,
-        "w": 14,
-        "x": 10,
+        "h": 21,
+        "w": 13,
+        "x": 11,
         "y": 0
       },
       "id": 59,
@@ -397,7 +497,7 @@
         "showLabels": false,
         "showTime": true,
         "sortOrder": "Descending",
-        "wrapLogMessage": false
+        "wrapLogMessage": true
       },
       "targets": [
         {
@@ -405,7 +505,7 @@
           "bucketAggs": [],
           "datasource": {
             "type": "elasticsearch",
-            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+            "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
           },
           "metrics": [
             {
@@ -416,7 +516,7 @@
               "type": "logs"
             }
           ],
-          "query": "(syslog_level:ALERT OR rule_level:>=8) AND agent_name:$agent_name AND rule_level:$rule_level",
+          "query": "(syslog_level:ALERT OR rule_level:>=8) AND agent_name:$agent_name AND rule_level:$rule_level AND client_group:$client_group",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -431,6 +531,9 @@
               "_index": true,
               "_source": true,
               "_type": true,
+              "agent_id": true,
+              "decoder_name": true,
+              "decoder_parent": true,
               "full_log": true,
               "gl2_accounted_message_size": true,
               "gl2_message_id": true,
@@ -439,13 +542,22 @@
               "gl2_remote_port": true,
               "gl2_source_input": true,
               "gl2_source_node": true,
+              "highlight": true,
               "id": true,
               "level": true,
               "location": true,
               "log_input": true,
+              "manager_name": true,
               "message": true,
+              "previous_output": true,
+              "rule_gdpr": true,
+              "rule_gpg13": true,
               "rule_groups1": true,
               "rule_groups2": true,
+              "rule_groups3": true,
+              "rule_hipaa": true,
+              "rule_pci_dss": true,
+              "rule_tsc": true,
               "sort": true,
               "source": true,
               "streams": true,
@@ -461,7 +573,173 @@
     {
       "datasource": {
         "type": "elasticsearch",
-        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+        "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "yellow",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 4,
+        "x": 0,
+        "y": 3
+      },
+      "id": 51,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "value"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": "0",
+                "timeZone": "utc",
+                "trimEdges": "0"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "rule_level:>=8 AND rule_level:<=11 AND agent_name:$agent_name AND rule_level:$rule_level",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "Warning",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 0,
+        "y": 5
+      },
+      "id": 18,
+      "links": [],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "agent_name:$agent_name AND rule_level:$rule_level",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "EVENTS (TOTAL)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
       },
       "fieldConfig": {
         "defaults": {
@@ -503,10 +781,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 3,
+        "h": 3,
+        "w": 4,
         "x": 0,
-        "y": 3
+        "y": 8
       },
       "id": 16,
       "links": [],
@@ -539,7 +817,7 @@
           ],
           "datasource": {
             "type": "elasticsearch",
-            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+            "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
           },
           "metrics": [
             {
@@ -548,7 +826,7 @@
               "type": "max"
             }
           ],
-          "query": "agent_name:$agent_name NOT rule_id:60109",
+          "query": "agent_name:$agent_name",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -558,42 +836,64 @@
     },
     {
       "datasource": {
-        "type": "elasticsearch",
-        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+        "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "${DS_ZABBIX}"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "max": 15,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "yellow",
+                "color": "#299c46",
                 "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 8
+              },
+              {
+                "color": "#d44a3a",
+                "value": 12
               }
             ]
-          }
+          },
+          "unit": "decgbytes"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 3,
+        "h": 3,
+        "w": 4,
         "x": 0,
-        "y": 7
+        "y": 11
       },
-      "id": 51,
+      "id": 60,
+      "links": [],
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
-        "orientation": "auto",
+        "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
-            "sum"
+            "max"
           ],
           "fields": "",
           "values": false
@@ -603,42 +903,84 @@
       "pluginVersion": "9.4.7",
       "targets": [
         {
-          "alias": "",
-          "bucketAggs": [
-            {
-              "field": "timestamp",
-              "id": "2",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": "0",
-                "timeZone": "utc",
-                "trimEdges": "0"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          "application": {
+            "filter": ""
           },
-          "metrics": [
-            {
-              "id": "1",
-              "type": "count"
-            }
-          ],
-          "query": "rule_level:>=8 AND rule_level:<=11 AND agent_name:$agent_name AND rule_level:$rule_level NOT rule_id:60109",
+          "countTriggersBy": "",
+          "datasource": {
+            "type": "alexanderzobnin-zabbix-datasource",
+            "uid": "${DS_ZABBIX}"
+          },
+          "evaltype": "0",
+          "functions": [],
+          "group": {
+            "filter": "Contego"
+          },
+          "host": {
+            "filter": "SIEM - CONTEGO"
+          },
+          "item": {
+            "filter": "Index CONTEGO"
+          },
+          "itemTag": {
+            "filter": "SIEM: CONTEGO"
+          },
+          "itemids": "",
+          "macro": {
+            "filter": ""
+          },
+          "options": {
+            "acknowledged": 2,
+            "count": false,
+            "disableDataAlignment": false,
+            "hostProxy": false,
+            "hostsInMaintenance": false,
+            "limit": 1001,
+            "minSeverity": 0,
+            "showDisabledItems": false,
+            "skipEmptyValues": false,
+            "sortProblems": "default",
+            "useTimeRange": false,
+            "useTrends": "default",
+            "useZabbixValueMapping": false
+          },
+          "proxy": {
+            "filter": ""
+          },
+          "queryType": "2",
           "refId": "A",
-          "timeField": "timestamp"
+          "resultFormat": "time_series",
+          "schema": 12,
+          "showProblems": "problems",
+          "table": {
+            "skipEmptyValues": false
+          },
+          "tags": {
+            "filter": ""
+          },
+          "textFilter": "",
+          "trigger": {
+            "filter": ""
+          }
         }
       ],
-      "title": "Warning",
+      "title": "Disk Usage",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "lastNotNull"
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
       "datasource": {
         "type": "elasticsearch",
-        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+        "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
       },
       "fieldConfig": {
         "defaults": {
@@ -702,10 +1044,10 @@
         ]
       },
       "gridPos": {
-        "h": 9,
-        "w": 7,
-        "x": 3,
-        "y": 10
+        "h": 8,
+        "w": 11,
+        "x": 0,
+        "y": 14
       },
       "id": 44,
       "options": {
@@ -739,7 +1081,7 @@
           ],
           "datasource": {
             "type": "elasticsearch",
-            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+            "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
           },
           "metrics": [
             {
@@ -747,7 +1089,7 @@
               "type": "count"
             }
           ],
-          "query": "(rule_level:>=12 OR syslog_level:ALERT) AND agent_name:$agent_name AND rule_level:$rule_level NOT rule_id:60109",
+          "query": "agent_name:$agent_name AND rule_level:$rule_level",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -771,290 +1113,7 @@
     {
       "datasource": {
         "type": "elasticsearch",
-        "uid": "${DS_WAZUH_- CONTEGO LAB}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [
-            {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 0,
-        "y": 11
-      },
-      "id": 43,
-      "links": [],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.4.7",
-      "targets": [
-        {
-          "alias": "",
-          "bucketAggs": [
-            {
-              "field": "timestamp",
-              "id": "2",
-              "settings": {
-                "interval": "auto"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "${DS_WAZUH_- CONTEGO LAB}"
-          },
-          "metrics": [
-            {
-              "id": "1",
-              "type": "count"
-            }
-          ],
-          "query": "(rule_level:>=12 OR syslog_level:ALERT) AND agent_name:$agent_name AND rule_level:$rule_level NOT rule_id:60109",
-          "refId": "A",
-          "timeField": "timestamp"
-        }
-      ],
-      "title": "Critical",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "elasticsearch",
-        "uid": "${DS_WAZUH_- CONTEGO LAB}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [
-            {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "locale"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 0,
-        "y": 15
-      },
-      "id": 18,
-      "links": [],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.4.7",
-      "targets": [
-        {
-          "alias": "",
-          "bucketAggs": [
-            {
-              "field": "timestamp",
-              "id": "2",
-              "settings": {
-                "interval": "auto"
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "${DS_WAZUH_- CONTEGO LAB}"
-          },
-          "metrics": [
-            {
-              "id": "1",
-              "type": "count"
-            }
-          ],
-          "query": "agent_name:$agent_name AND rule_level:$rule_level NOT rule_id:60109",
-          "refId": "A",
-          "timeField": "timestamp"
-        }
-      ],
-      "title": "EVENTS (TOTAL)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "elasticsearch",
-        "uid": "${DS_WAZUH_- CONTEGO LAB}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 15,
-        "w": 24,
-        "x": 0,
-        "y": 19
-      },
-      "id": 61,
-      "options": {
-        "color": "yellow",
-        "iteration": 20,
-        "monochrome": false,
-        "nodeColor": "super-light-purple",
-        "nodePadding": 20,
-        "nodeWidth": 30
-      },
-      "targets": [
-        {
-          "alias": "",
-          "bucketAggs": [
-            {
-              "field": "src_ip",
-              "id": "2",
-              "settings": {
-                "min_doc_count": "1",
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "10"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "dst_ip",
-              "id": "3",
-              "settings": {
-                "min_doc_count": "1",
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "10"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "dst_port",
-              "id": "4",
-              "settings": {
-                "min_doc_count": "1",
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "1"
-              },
-              "type": "terms"
-            }
-          ],
-          "datasource": {
-            "type": "elasticsearch",
-            "uid": "${DS_WAZUH_- CONTEGO LAB}"
-          },
-          "metrics": [
-            {
-              "id": "1",
-              "type": "count"
-            }
-          ],
-          "query": "(rule_groups:*sysmon_event3* OR rule_groups:*sysmon_eid3_detections* OR rule_groups:*suricata*) AND agent_name:$agent_name AND (data_eventdata_sourceIsIpv6:false OR data_win_eventdata_sourceIsIpv6:false)",
-          "refId": "A",
-          "timeField": "timestamp"
-        }
-      ],
-      "title": "CONNECTIONS MAP (TOP 10 IPs)",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "Count": "Count",
-              "dst_ip": "DST IP",
-              "dst_port": "DST PORT",
-              "src_ip": "SRC IP"
-            }
-          }
-        }
-      ],
-      "transparent": true,
-      "type": "netsage-sankey-panel"
-    },
-    {
-      "datasource": {
-        "type": "elasticsearch",
-        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+        "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
       },
       "fieldConfig": {
         "defaults": {
@@ -1190,7 +1249,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 22
       },
       "id": 53,
       "options": {
@@ -1218,7 +1277,7 @@
           "bucketAggs": [],
           "datasource": {
             "type": "elasticsearch",
-            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+            "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
           },
           "metrics": [
             {
@@ -1229,7 +1288,7 @@
               "type": "raw_data"
             }
           ],
-          "query": "agent_name:$agent_name AND rule_level:$rule_level NOT rule_id:60109",
+          "query": "agent_name:$agent_name AND rule_level:$rule_level",
           "refId": "A",
           "timeField": "timestamp"
         }
@@ -1288,9 +1347,217 @@
         }
       ],
       "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-purples"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(245, 54, 54, 0.9)"
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 0
+              },
+              {
+                "color": "rgba(50, 172, 45, 0.97)",
+                "value": 10
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "dst_ip"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Destination IP"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "IP REPUTATION",
+                    "url": "https://talosintelligence.com/reputation_center/lookup?search=${__value.text}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "geoip_latitude"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": true,
+                  "tooltip": true,
+                  "viz": true
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "geoip_longitude"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": true,
+                  "tooltip": true,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 34
+      },
+      "id": 57,
+      "maxDataPoints": 1,
+      "options": {
+        "basemap": {
+          "config": {},
+          "name": "Basemap",
+          "tooltip": true,
+          "type": "osm-standard"
+        },
+        "controls": {
+          "mouseWheelZoom": true,
+          "showAttribution": false,
+          "showDebug": false,
+          "showMeasure": false,
+          "showScale": false,
+          "showZoom": true
+        },
+        "layers": [
+          {
+            "config": {
+              "blur": 4,
+              "radius": 12,
+              "weight": {
+                "fixed": 1,
+                "max": 1,
+                "min": 0
+              }
+            },
+            "filterData": {
+              "id": "byRefId",
+              "options": "A"
+            },
+            "location": {
+              "latitude": "geoip_latitude",
+              "longitude": "geoip_longitude",
+              "mode": "coords"
+            },
+            "name": "Locations",
+            "opacity": 0.5,
+            "tooltip": true,
+            "type": "heatmap"
+          }
+        ],
+        "tooltip": {
+          "mode": "none"
+        },
+        "view": {
+          "allLayers": true,
+          "id": "zero",
+          "lat": 0,
+          "lon": 0,
+          "zoom": 1
+        }
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "field": "dst_ip",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "0"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "geoip_latitude",
+              "id": "5",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "0"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "geoip_longitude",
+              "id": "6",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "0"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "(rule_groups:*sysmon_event3* OR rule_groups:*sysmon_eid3_detections*) AND agent_name:$agent_name",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "LOCATIONS",
+      "type": "geomap"
     }
   ],
-  "refresh": "5s",
+  "refresh": "",
   "revision": 1,
   "schemaVersion": 38,
   "style": "dark",
@@ -1301,16 +1568,16 @@
         "current": {},
         "datasource": {
           "type": "elasticsearch",
-          "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
         },
-        "definition": "{ \"find\": \"terms\", \"field\": \"agent_name\", \"query\": \"\"}",
+        "definition": "{ \"find\": \"terms\", \"field\": \"agent_name\", \"query\": \"client_group:$client_group\"}",
         "hide": 0,
         "includeAll": true,
         "label": "Agent",
         "multi": false,
         "name": "agent_name",
         "options": [],
-        "query": "{ \"find\": \"terms\", \"field\": \"agent_name\", \"query\": \"\"}",
+        "query": "{ \"find\": \"terms\", \"field\": \"agent_name\", \"query\": \"client_group:$client_group\"}",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1324,32 +1591,79 @@
         "current": {},
         "datasource": {
           "type": "elasticsearch",
-          "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
         },
-        "definition": "{ \"find\": \"terms\", \"field\": \"rule_level\", \"query\": \"\"}",
+        "definition": "{ \"find\": \"terms\", \"field\": \"rule_level\", \"query\": \"client_group:$client_group\"}",
         "hide": 0,
         "includeAll": true,
         "label": "Rule Level",
-        "multi": false,
+        "multi": true,
         "name": "rule_level",
         "options": [],
-        "query": "{ \"find\": \"terms\", \"field\": \"rule_level\", \"query\": \"\"}",
+        "query": "{ \"find\": \"terms\", \"field\": \"rule_level\", \"query\": \"client_group:$client_group\"}",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 3,
         "type": "query"
       },
       {
         "datasource": {
           "type": "elasticsearch",
-          "uid": "FyKqgf2Sz"
+          "uid": "2SyzEHoSz"
         },
         "filters": [],
         "hide": 0,
         "name": "Filters",
         "skipUrlSync": false,
         "type": "adhoc"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "${DS_WAZUH_INDEXER - CONTEGO}"
+        },
+        "definition": "{ \"find\": \"terms\", \"field\": \"client_group\", \"query\": \"\"}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Client Group",
+        "multi": true,
+        "name": "client_group",
+        "options": [],
+        "query": "{ \"find\": \"terms\", \"field\": \"client_group\", \"query\": \"\"}",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "alexanderzobnin-zabbix-datasource",
+          "uid": "${DS_ZABBIX}"
+        },
+        "definition": "Zabbix - host",
+        "hide": 0,
+        "includeAll": false,
+        "label": "zabbix group",
+        "multi": false,
+        "name": "zabbix_group",
+        "options": [],
+        "query": {
+          "application": "",
+          "group": "/.*/",
+          "host": "",
+          "item": "",
+          "itemTag": "",
+          "queryType": "host"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
@@ -1359,6 +1673,7 @@
   },
   "timepicker": {
     "hidden": true,
+    "nowDelay": "2d",
     "refresh_intervals": [
       "1m"
     ],
@@ -1377,6 +1692,6 @@
   "timezone": "",
   "title": "Summary Dashboard",
   "uid": "vKpA8aA7z566",
-  "version": 33,
-  "weekStart": ""
+  "version": 11,
+  "weekStart": "sunday"
 }
