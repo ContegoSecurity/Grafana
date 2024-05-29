@@ -1,0 +1,1761 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_WAZUH_- CONTEGO LAB",
+      "label": "Wazuh - contego lab",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "elasticsearch",
+      "pluginName": "Elasticsearch"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "datasource",
+      "id": "elasticsearch",
+      "name": "Elasticsearch",
+      "version": "1.0.0"
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.4.7"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph (old)",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "logs",
+      "name": "Logs",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "piechart",
+      "name": "Pie chart",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-red",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MITRE ENRICHED EVENTS"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "palette-classic"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ALL EVENTS"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "palette-classic"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "alias": "MITRE ENRICHED EVENTS",
+          "bucketAggs": [
+            {
+              "$$hashKey": "object:266",
+              "field": "timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "$$hashKey": "object:264",
+              "field": "select field",
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "_exists_:rule_mitre_tactic AND agent_name:$agent_name AND rule_mitre_id:$mitre_id NOT rule_id:60109",
+          "refId": "A",
+          "timeField": "timestamp"
+        },
+        {
+          "alias": "ALL EVENTS",
+          "bucketAggs": [
+            {
+              "field": "timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "hide": false,
+          "metrics": [
+            {
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "agent_name:$agent_name AND rule_mitre_id:$mitre_id NOT rule_id:60109",
+          "refId": "B",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "MITRE ATT&CK EBRICHMENT",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-red",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "id": 35,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "$$hashKey": "object:266",
+              "field": "timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "$$hashKey": "object:264",
+              "field": "select field",
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "rule_level:>=12 AND _exists_:rule_mitre_tactic AND agent_name:$agent_name AND rule_mitre_id:$mitre_id NOT rule_id:60109",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "MITRE ATT&CK ALERTS",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-red",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 4,
+        "x": 8,
+        "y": 0
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "$$hashKey": "object:161",
+              "field": "agent_name",
+              "id": "2",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "$$hashKey": "object:159",
+              "field": "agent_name",
+              "id": "1",
+              "meta": {},
+              "settings": {},
+              "type": "cardinality"
+            }
+          ],
+          "query": "rule_level:>=12 AND _exists_:rule_mitre_tactic AND agent_name:$agent_name AND rule_mitre_id:$mitre_id",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "HOSTS AFFECTED",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "noValue": "0",
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 15,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "values": [
+            "value"
+          ]
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "6.6.2",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "$$hashKey": "object:188",
+              "fake": true,
+              "field": "agent_name",
+              "id": "3",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "0"
+              },
+              "type": "terms"
+            },
+            {
+              "$$hashKey": "object:189",
+              "field": "timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "$$hashKey": "object:186",
+              "field": "select field",
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "_exists_:rule_mitre_tactic AND agent_name:$agent_name AND rule_mitre_id:$mitre_id",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "HOSTS",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-red",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "user_name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 203
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 13,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "$$hashKey": "object:228",
+              "field": "user_name",
+              "id": "2",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "$$hashKey": "object:226",
+              "field": "user_name",
+              "id": "1",
+              "meta": {},
+              "settings": {},
+              "type": "cardinality"
+            }
+          ],
+          "query": "_exists_:rule_mitre_tactic AND agent_name:$agent_name AND rule_mitre_id:$mitre_id",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "USERS/ACCOUNTS AFFECTED",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 5,
+        "x": 0,
+        "y": 7
+      },
+      "id": 16,
+      "links": [],
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": false,
+          "values": [
+            "value"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "7.1.0",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "$$hashKey": "object:82",
+              "fake": true,
+              "field": "rule_mitre_tactic",
+              "id": "3",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "$$hashKey": "object:83",
+              "field": "timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "$$hashKey": "object:80",
+              "field": "select field",
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "agent_name:$agent_name AND rule_mitre_id:$mitre_id NOT rule_id:60109",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "MITRE ATT&CK TACTICS (TOP 10)",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [
+            {
+              "options": {
+                "mitre_attack": {
+                  "text": "Total"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 6,
+        "x": 5,
+        "y": 7
+      },
+      "id": 28,
+      "links": [],
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "$$hashKey": "object:615",
+              "fake": true,
+              "field": "rule_mitre_id",
+              "id": "4",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "0"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "$$hashKey": "object:80",
+              "field": "select field",
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "agent_name:$agent_name AND rule_mitre_id:$mitre_id",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "MITRE ATT&CK ID",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "gridPos": {
+        "h": 22,
+        "w": 13,
+        "x": 11,
+        "y": 7
+      },
+      "id": 37,
+      "options": {
+        "dedupStrategy": "signature",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "settings": {
+                "limit": "500"
+              },
+              "type": "logs"
+            }
+          ],
+          "query": "agent_name:$agent_name AND (_exists_:rule_mitre_tactic OR _exists_:data_win_eventdata_ruleName) AND rule_mitre_id:$mitre_id NOT rule_id:60109",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "LOG VIEWER",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "timestamp",
+                "rule_description",
+                "agent_ip",
+                "agent_name",
+                "data_eventdata_commandLine",
+                "data_eventdata_company",
+                "data_eventdata_currentDirectory",
+                "data_eventdata_description",
+                "data_eventdata_fileVersion",
+                "data_eventdata_image",
+                "data_eventdata_originalFileName",
+                "data_eventdata_parentCommandLine",
+                "data_eventdata_parentImage",
+                "data_eventdata_parentProcessGuid",
+                "data_eventdata_parentProcessId",
+                "data_eventdata_parentUser",
+                "data_eventdata_processId",
+                "data_eventdata_product",
+                "data_eventdata_ruleName",
+                "data_eventdata_user",
+                "data_system_channel",
+                "data_system_computer",
+                "data_system_eventId",
+                "data_system_processID",
+                "data_system_systemTime",
+                "data_system_task",
+                "data_system_version",
+                "data_win_eventdata_commandLine",
+                "data_win_eventdata_currentDirectory",
+                "data_win_eventdata_description",
+                "data_win_eventdata_details",
+                "data_win_eventdata_elevatedToken",
+                "data_win_eventdata_eventType",
+                "data_win_eventdata_grantedAccess",
+                "data_win_eventdata_image",
+                "data_win_eventdata_imageLoaded",
+                "data_win_eventdata_logonId",
+                "data_win_eventdata_logonProcessName",
+                "data_win_eventdata_logonType",
+                "data_win_eventdata_originalFileName",
+                "data_win_eventdata_parentCommandLine",
+                "data_win_eventdata_parentImage",
+                "data_win_eventdata_parentProcessId",
+                "data_win_eventdata_parentUser",
+                "data_win_eventdata_process",
+                "data_win_eventdata_processId",
+                "data_win_eventdata_processName",
+                "data_win_eventdata_product",
+                "data_win_eventdata_ruleName",
+                "data_win_eventdata_sourceImage",
+                "data_win_eventdata_sourceProcessId",
+                "data_win_eventdata_sourceUser",
+                "data_win_eventdata_subjectDomainName",
+                "data_win_eventdata_subjectUserName",
+                "data_win_eventdata_subjectUserSid",
+                "data_win_eventdata_targetDomainName",
+                "data_win_eventdata_targetFilename",
+                "data_win_eventdata_targetImage",
+                "data_win_eventdata_targetLinkedLogonId",
+                "data_win_eventdata_targetLogonId",
+                "data_win_eventdata_targetObject",
+                "data_win_eventdata_targetProcessGUID",
+                "data_win_eventdata_targetProcessId",
+                "data_win_eventdata_targetUser",
+                "data_win_eventdata_targetUserName",
+                "data_win_eventdata_targetUserSid",
+                "data_win_eventdata_terminalSessionId",
+                "data_win_eventdata_user",
+                "data_win_eventdata_utcTime",
+                "data_win_system_channel",
+                "data_win_system_computer",
+                "data_win_system_eventID",
+                "data_win_system_message",
+                "data_win_system_providerName",
+                "data_win_system_systemTime",
+                "data_win_system_task",
+                "decoder_name",
+                "gl2_accounted_message_size",
+                "rule_firedtimes",
+                "rule_id",
+                "rule_level",
+                "rule_mitre_id",
+                "rule_mitre_tactic",
+                "rule_mitre_technique",
+                "data_win_eventdata_fileVersion",
+                "data_win_system_processID",
+                "gl2_remote_port",
+                "gl2_source_input",
+                "gl2_source_node",
+                "gl2_message_id",
+                "gl2_remote_ip",
+                "rule_mail"
+              ]
+            }
+          }
+        }
+      ],
+      "type": "logs"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 5,
+        "x": 0,
+        "y": 18
+      },
+      "id": 29,
+      "links": [],
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false,
+          "values": [
+            "value"
+          ]
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "7.1.0",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "$$hashKey": "object:82",
+              "fake": true,
+              "field": "rule_mitre_technique",
+              "id": "3",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "$$hashKey": "object:83",
+              "field": "timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "$$hashKey": "object:80",
+              "field": "select field",
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "agent_name:$agent_name AND (_exists_:rule_mitre_tactic OR _exists_:data_win_eventdata_ruleName) AND rule_mitre_id:$mitre_id NOT rule_id:60109",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "MITRE ATT&CK TECHNIQUES (TOP 10)",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [
+            {
+              "options": {
+                "mitre_attack": {
+                  "text": "Total"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 6,
+        "x": 5,
+        "y": 18
+      },
+      "id": 30,
+      "links": [],
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "$$hashKey": "object:615",
+              "fake": true,
+              "field": "rule_mitre_technique",
+              "id": "4",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "0"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "$$hashKey": "object:80",
+              "field": "select field",
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "agent_name:$agent_name AND (_exists_:rule_mitre_tactic OR _exists_:data_win_eventdata_ruleName) AND rule_mitre_id:$mitre_id",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "MITRE ATT&CK TECHNIQUES",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [
+            {
+              "options": {
+                "mitre_attack": {
+                  "text": "Total"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 9,
+        "x": 0,
+        "y": 29
+      },
+      "id": 17,
+      "options": {
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "$$hashKey": "object:82",
+              "fake": true,
+              "field": "agent_name",
+              "id": "3",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "$$hashKey": "object:80",
+              "field": "select field",
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "agent_name:$agent_name AND (_exists_:rule_mitre_tactic OR _exists_:data_win_eventdata_ruleName) AND rule_mitre_id:$mitre_id",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "MITRE ATT&CK - TOP 10 AGENTS",
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 12,
+        "w": 15,
+        "x": 9,
+        "y": 29
+      },
+      "hiddenSeries": false,
+      "id": 32,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.4.7",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "$$hashKey": "object:644",
+              "fake": true,
+              "field": "agent_name",
+              "id": "3",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_term",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "$$hashKey": "object:627",
+              "field": "timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "5m",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "$$hashKey": "object:625",
+              "field": "select field",
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "agent_name:$agent_name AND (_exists_:rule_mitre_tactic OR _exists_:data_win_eventdata_ruleName) AND rule_mitre_id:$mitre_id",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "MITRE ATT&CK - HISTOGRAM",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:591",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:592",
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "timestamp"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Date/Time"
+              },
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm:ss"
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "agent_name"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "AGENT"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "full_log"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "EVENT"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "rule_groups"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "RULE GROUPS"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "rule_level"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "RULE LEVEL"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": -1
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.align"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "#37872D"
+                    },
+                    {
+                      "color": "rgba(237, 129, 40, 0.89)",
+                      "value": 7
+                    },
+                    {
+                      "color": "rgba(245, 54, 54, 0.9)",
+                      "value": 12
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "rule_description"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "RULE DESCRIPTION"
+              },
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "EVENT ID"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "VIEW EVENT DETAILS",
+                    "url": "https://myservice.socfortress.co/explore?left=%7B%22datasource%22:%22WAZUH%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22query%22:%22_id:${__value.text}%22,%22alias%22:%22%22,%22metrics%22:%5B%7B%22id%22:%221%22,%22type%22:%22logs%22,%22settings%22:%7B%22limit%22:%22500%22%7D%7D%5D,%22bucketAggs%22:%5B%5D,%22timeField%22:%22timestamp%22%7D%5D,%22range%22:%7B%22from%22:%22now-6h%22,%22to%22:%22now%22%7D%7D"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 24,
+        "x": 0,
+        "y": 41
+      },
+      "id": 27,
+      "options": {
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "bucketAggs": [],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "settings": {
+                "size": "500"
+              },
+              "type": "raw_data"
+            }
+          ],
+          "query": "agent_name:$agent_name AND (_exists_:rule_mitre_tactic OR _exists_:data_win_eventdata_ruleName) AND rule_mitre_id:$mitre_id NOT rule_id:60109",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "MITRE ATT&CK - TELEMETRY",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "timestamp",
+                "_id",
+                "agent_ip",
+                "agent_name",
+                "rule_description",
+                "rule_level",
+                "rule_mitre_id",
+                "rule_mitre_tactic",
+                "rule_mitre_technique",
+                "syslog_level"
+              ]
+            }
+          }
+        },
+        {
+          "disabled": true,
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "agent_ip": true
+            },
+            "indexByName": {
+              "_id": 1,
+              "agent_ip": 3,
+              "agent_name": 2,
+              "rule_description": 4,
+              "rule_level": 5,
+              "rule_mitre_id": 6,
+              "rule_mitre_tactic": 7,
+              "rule_mitre_technique": 8,
+              "syslog_level": 9,
+              "timestamp": 0
+            },
+            "renameByName": {
+              "_id": "EVENT ID",
+              "agent_ip": "",
+              "rule_description": "",
+              "rule_mitre_id": "MITRE ID",
+              "rule_mitre_tactic": "TACTIC",
+              "rule_mitre_technique": "TECHNIQUE",
+              "syslog_level": "LEVEL",
+              "timestamp": "DATE/TIME"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": "",
+  "revision": 1,
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "FyKqgf2Sz"
+        },
+        "filters": [],
+        "hide": 0,
+        "label": "Filters",
+        "name": "Filters",
+        "skipUrlSync": false,
+        "type": "adhoc"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "${DS_WAZUH_- CONTEGO LAB}"
+        },
+        "definition": "{ \"find\": \"terms\", \"field\": \"agent_name\", \"query\": \"_exists_:rule_mitre_tactic\"}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "AGENT",
+        "multi": false,
+        "name": "agent_name",
+        "options": [],
+        "query": "{ \"find\": \"terms\", \"field\": \"agent_name\", \"query\": \"_exists_:rule_mitre_tactic\"}",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "${DS_WAZUH_- CONTEGO LAB}"
+        },
+        "definition": "{ \"find\": \"terms\", \"field\": \"rule_mitre_id\", \"query\": \"\"}",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Mitre ID",
+        "multi": true,
+        "name": "mitre_id",
+        "options": [],
+        "query": "{ \"find\": \"terms\", \"field\": \"rule_mitre_id\", \"query\": \"\"}",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "MITRE ATT&CK",
+  "uid": "H2envsq7z",
+  "version": 8,
+  "weekStart": ""
+}

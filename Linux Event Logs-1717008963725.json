@@ -1,0 +1,2419 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_WAZUH_- CONTEGO LAB",
+      "label": "Wazuh - contego lab",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "elasticsearch",
+      "pluginName": "Elasticsearch"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "datasource",
+      "id": "elasticsearch",
+      "name": "Elasticsearch",
+      "version": "1.0.0"
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.4.7"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph (old)",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "e58748f2-1dd5-4e9c-bc24-2ed65f0d6bd8"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 72,
+      "panels": [],
+      "title": "LINUX EVENT LOGS - PROCESS",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 9,
+        "x": 0,
+        "y": 1
+      },
+      "id": 67,
+      "links": [],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "$$hashKey": "object:50",
+              "field": "timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "$$hashKey": "object:48",
+              "field": "select field",
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "rule_groups:*linux* AND agent_name:$agent_name AND (data_system_eventId:1 OR data_system_eventId:4 OR data_system_eventId:5 OR data_system_eventId:9)",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "LINUX SYSTEM - EVENTS",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "orange",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 50
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Count"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "gauge"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "rule_description"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 703
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "rule_level"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 212
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "from": 1,
+                      "result": {
+                        "color": "green",
+                        "index": 0
+                      },
+                      "to": 3
+                    },
+                    "type": "range"
+                  },
+                  {
+                    "options": {
+                      "from": 4,
+                      "result": {
+                        "color": "dark-yellow",
+                        "index": 1
+                      },
+                      "to": 6
+                    },
+                    "type": "range"
+                  },
+                  {
+                    "options": {
+                      "from": 7,
+                      "result": {
+                        "color": "orange",
+                        "index": 2
+                      },
+                      "to": 9
+                    },
+                    "type": "range"
+                  },
+                  {
+                    "options": {
+                      "from": 10,
+                      "result": {
+                        "color": "semi-dark-red",
+                        "index": 3
+                      },
+                      "to": 15
+                    },
+                    "type": "range"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 15,
+        "x": 9,
+        "y": 1
+      },
+      "id": 69,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "$$hashKey": "object:3082",
+              "fake": true,
+              "field": "rule_description",
+              "id": "4",
+              "settings": {
+                "min_doc_count": 0,
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "$$hashKey": "object:73",
+              "fake": true,
+              "field": "rule_level",
+              "id": "3",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "0"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "$$hashKey": "object:71",
+              "field": "select field",
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "rule_groups:*linux* AND agent_name:$agent_name AND (data_system_eventId:1 OR data_system_eventId:4 OR data_system_eventId:5 OR data_system_eventId:9)",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "LINUX SYSTEM - EVENTS BY TYPE",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "agent_name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 492
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 9,
+        "x": 0,
+        "y": 8
+      },
+      "id": 70,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "bucketAggs": [
+            {
+              "$$hashKey": "object:73",
+              "fake": true,
+              "field": "agent_name",
+              "id": "3",
+              "settings": {
+                "min_doc_count": 1,
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "0"
+              },
+              "type": "terms"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "$$hashKey": "object:71",
+              "field": "select field",
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "rule_groups:*linux* AND agent_name:$agent_name AND (data_system_eventId:1 OR data_system_eventId:4 OR data_system_eventId:5 OR data_system_eventId:9)",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "LINUX SYSTEM - EVENTS BY AGENT",
+      "type": "table"
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 15,
+        "x": 9,
+        "y": 8
+      },
+      "hiddenSeries": false,
+      "id": 83,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "9.4.7",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "agent_name",
+              "id": "4",
+              "settings": {
+                "min_doc_count": "1",
+                "order": "desc",
+                "orderBy": "_count",
+                "size": "10"
+              },
+              "type": "terms"
+            },
+            {
+              "field": "timestamp",
+              "id": "5",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": "0",
+                "trimEdges": "0"
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "$$hashKey": "object:71",
+              "field": "select field",
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "rule_groups:*linux* AND agent_name:$agent_name AND (data_system_eventId:1 OR data_system_eventId:4 OR data_system_eventId:5 OR data_system_eventId:9)",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "LINUX SYSTEM - EVENTS BY AGENT (HISTOGRAM)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        },
+        {
+          "format": "short",
+          "logBase": 1,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_WAZUH_- CONTEGO LAB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "rule_level"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 93
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "windows_event_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 186
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DATE/TIME"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 202
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AGENT"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 171
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SRC IP"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 167
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MESSAGE"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 1519
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "rule_description"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 524
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RULE LEVEL"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 196
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "EVENT ID"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "VIEW EVENT DETAILS",
+                    "url": "https://myservice.socfortress.co/explore?left=%7B%22datasource%22:%22WAZUH%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22query%22:%22_id:${__value.text}%22,%22alias%22:%22%22,%22metrics%22:%5B%7B%22id%22:%221%22,%22type%22:%22logs%22,%22settings%22:%7B%22limit%22:%22500%22%7D%7D%5D,%22bucketAggs%22:%5B%5D,%22timeField%22:%22timestamp%22%7D%5D,%22range%22:%7B%22from%22:%22now-6h%22,%22to%22:%22now%22%7D%7D"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "id": 85,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "settings": {
+                "size": "500"
+              },
+              "type": "raw_data"
+            }
+          ],
+          "query": "rule_groups:*linux* AND agent_name:$agent_name AND (data_system_eventId:1 OR data_system_eventId:4 OR data_system_eventId:5 OR data_system_eventId:9)",
+          "queryType": "randomWalk",
+          "refId": "A",
+          "timeField": "timestamp"
+        }
+      ],
+      "title": "LINUX SYSTEM - EVENTS",
+      "transformations": [
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "timestamp",
+                "agent_ip",
+                "agent_name",
+                "rule_description",
+                "data_eventdata_image",
+                "data_eventdata_user",
+                "data_eventdata_currentDirectory",
+                "data_eventdata_commandLine",
+                "rule_id",
+                "rule_level",
+                "rule_mitre_id",
+                "rule_mitre_tactic",
+                "rule_mitre_technique"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "rule_id": true
+            },
+            "indexByName": {
+              "agent_ip": 1,
+              "agent_name": 2,
+              "data_eventdata_commandLine": 8,
+              "data_eventdata_currentDirectory": 6,
+              "data_eventdata_image": 7,
+              "data_eventdata_user": 5,
+              "rule_description": 4,
+              "rule_id": 9,
+              "rule_level": 3,
+              "rule_mitre_id": 10,
+              "rule_mitre_tactic": 11,
+              "rule_mitre_technique": 12,
+              "timestamp": 0
+            },
+            "renameByName": {
+              "agent_ip": "AGENT IP",
+              "agent_name": "AGENT NAME",
+              "data_eventdata_commandLine": "COMMANDLINE",
+              "data_eventdata_currentDirectory": "CURRENT DIRECTORY",
+              "data_eventdata_image": "PROGRAM",
+              "data_eventdata_user": "USER",
+              "rule_description": "DESCRIPTION",
+              "rule_id": "RULE ID",
+              "rule_level": "LEVEL",
+              "rule_mitre_id": "MITRE ID",
+              "rule_mitre_tactic": "MITRE TACTIC",
+              "rule_mitre_technique": "MITRE TECHNIQUE",
+              "timestamp": "TIMESTAMP"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "collapsed": true,
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "e58748f2-1dd5-4e9c-bc24-2ed65f0d6bd8"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 25
+      },
+      "id": 76,
+      "panels": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "blue"
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 0,
+            "y": 2
+          },
+          "id": 86,
+          "links": [],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "9.4.7",
+          "targets": [
+            {
+              "bucketAggs": [
+                {
+                  "$$hashKey": "object:50",
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto",
+                    "min_doc_count": 0,
+                    "trimEdges": 0
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "${DS_WAZUH_- CONTEGO LAB}"
+              },
+              "metrics": [
+                {
+                  "$$hashKey": "object:48",
+                  "field": "select field",
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "(rule_groups:*linux* AND agent_name:$agent_name AND data_system_eventId:3) OR (rule_groups:*suricata*)",
+              "refId": "A",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "LINUX NETWORK - EVENTS",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": false,
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "orange"
+                  },
+                  {
+                    "color": "red",
+                    "value": 50
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Count"
+                },
+                "properties": [
+                  {
+                    "id": "custom.cellOptions",
+                    "value": {
+                      "mode": "basic",
+                      "type": "gauge"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "rule_description"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 703
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "rule_level"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 212
+                  },
+                  {
+                    "id": "mappings",
+                    "value": [
+                      {
+                        "options": {
+                          "from": 1,
+                          "result": {
+                            "color": "green",
+                            "index": 0
+                          },
+                          "to": 3
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "from": 4,
+                          "result": {
+                            "color": "dark-yellow",
+                            "index": 1
+                          },
+                          "to": 6
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "from": 7,
+                          "result": {
+                            "color": "orange",
+                            "index": 2
+                          },
+                          "to": 9
+                        },
+                        "type": "range"
+                      },
+                      {
+                        "options": {
+                          "from": 10,
+                          "result": {
+                            "color": "semi-dark-red",
+                            "index": 3
+                          },
+                          "to": 15
+                        },
+                        "type": "range"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 15,
+            "x": 9,
+            "y": 2
+          },
+          "id": 88,
+          "links": [],
+          "maxDataPoints": 3,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "9.4.7",
+          "targets": [
+            {
+              "bucketAggs": [
+                {
+                  "$$hashKey": "object:3082",
+                  "fake": true,
+                  "field": "rule_description",
+                  "id": "4",
+                  "settings": {
+                    "min_doc_count": 0,
+                    "order": "desc",
+                    "orderBy": "_count",
+                    "size": "10"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "$$hashKey": "object:73",
+                  "fake": true,
+                  "field": "rule_level",
+                  "id": "3",
+                  "settings": {
+                    "min_doc_count": 1,
+                    "order": "desc",
+                    "orderBy": "_count",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "${DS_WAZUH_- CONTEGO LAB}"
+              },
+              "metrics": [
+                {
+                  "$$hashKey": "object:71",
+                  "field": "select field",
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "(rule_groups:*linux* AND agent_name:$agent_name AND data_system_eventId:3) OR (rule_groups:*suricata*)",
+              "refId": "A",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "LINUX NETWORK - EVENTS BY TYPE",
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": false,
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "agent_name"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 492
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 0,
+            "y": 9
+          },
+          "id": 90,
+          "links": [],
+          "maxDataPoints": 3,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "9.4.7",
+          "targets": [
+            {
+              "bucketAggs": [
+                {
+                  "$$hashKey": "object:73",
+                  "fake": true,
+                  "field": "agent_name",
+                  "id": "3",
+                  "settings": {
+                    "min_doc_count": 1,
+                    "order": "desc",
+                    "orderBy": "_count",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "${DS_WAZUH_- CONTEGO LAB}"
+              },
+              "metrics": [
+                {
+                  "$$hashKey": "object:71",
+                  "field": "select field",
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "(rule_groups:*linux* AND agent_name:$agent_name AND data_system_eventId:3) OR (rule_groups:*suricata*)",
+              "refId": "A",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "LINUX NETWORK - EVENTS BY AGENT",
+          "type": "table"
+        },
+        {
+          "aliasColors": {},
+          "bars": true,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "fill": 1,
+          "fillGradient": 0,
+          "gridPos": {
+            "h": 7,
+            "w": 15,
+            "x": 9,
+            "y": 9
+          },
+          "hiddenSeries": false,
+          "id": 91,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": false,
+          "linewidth": 1,
+          "links": [],
+          "maxDataPoints": 3,
+          "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
+          "percentage": false,
+          "pluginVersion": "9.4.7",
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [
+                {
+                  "field": "agent_name",
+                  "id": "4",
+                  "settings": {
+                    "min_doc_count": "1",
+                    "order": "desc",
+                    "orderBy": "_count",
+                    "size": "10"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "field": "timestamp",
+                  "id": "5",
+                  "settings": {
+                    "interval": "auto",
+                    "min_doc_count": "0",
+                    "trimEdges": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "${DS_WAZUH_- CONTEGO LAB}"
+              },
+              "metrics": [
+                {
+                  "$$hashKey": "object:71",
+                  "field": "select field",
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "(rule_groups:*linux* AND agent_name:$agent_name AND data_system_eventId:3) OR (rule_groups:*suricata*)",
+              "refId": "A",
+              "timeField": "timestamp"
+            }
+          ],
+          "thresholds": [],
+          "timeRegions": [],
+          "title": "LINUX NETWORK - EVENTS BY AGENT (HISTOGRAM)",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "logBase": 1,
+              "show": true
+            },
+            {
+              "format": "short",
+              "logBase": 1,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false
+          }
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "rule_level"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 93
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "windows_event_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 186
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "DATE/TIME"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 202
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "AGENT"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 171
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "SRC IP"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 167
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "MESSAGE"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 1519
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "rule_description"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 524
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "RULE LEVEL"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 196
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "EVENT ID"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "VIEW EVENT DETAILS",
+                        "url": "https://myservice.socfortress.co/explore?left=%7B%22datasource%22:%22WAZUH%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22query%22:%22_id:${__value.text}%22,%22alias%22:%22%22,%22metrics%22:%5B%7B%22id%22:%221%22,%22type%22:%22logs%22,%22settings%22:%7B%22limit%22:%22500%22%7D%7D%5D,%22bucketAggs%22:%5B%5D,%22timeField%22:%22timestamp%22%7D%5D,%22range%22:%7B%22from%22:%22now-6h%22,%22to%22:%22now%22%7D%7D"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 16
+          },
+          "id": 121,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "9.4.7",
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "${DS_WAZUH_- CONTEGO LAB}"
+              },
+              "metrics": [
+                {
+                  "id": "1",
+                  "settings": {
+                    "size": "500"
+                  },
+                  "type": "raw_data"
+                }
+              ],
+              "query": "(rule_groups:*linux* AND agent_name:$agent_name AND data_system_eventId:3) OR (rule_groups:*suricata*)",
+              "queryType": "randomWalk",
+              "refId": "A",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "LINUX NETWORK - EVENTS",
+          "transformations": [
+            {
+              "id": "filterFieldsByName",
+              "options": {
+                "include": {
+                  "names": [
+                    "timestamp",
+                    "agent_ip",
+                    "agent_name",
+                    "data_eventdata_DestinationIp",
+                    "data_eventdata_destinationHostname",
+                    "data_eventdata_image",
+                    "data_eventdata_sourceHostname",
+                    "data_eventdata_sourceIp",
+                    "data_eventdata_user",
+                    "rule_description",
+                    "rule_id",
+                    "rule_level",
+                    "data_eventdata_destinationPort"
+                  ]
+                }
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "data_eventdata_destinationHostname": true,
+                  "data_eventdata_sourceHostname": true,
+                  "rule_id": true
+                },
+                "indexByName": {
+                  "agent_ip": 1,
+                  "agent_name": 2,
+                  "data_eventdata_DestinationIp": 10,
+                  "data_eventdata_destinationHostname": 9,
+                  "data_eventdata_destinationPort": 11,
+                  "data_eventdata_image": 6,
+                  "data_eventdata_sourceHostname": 7,
+                  "data_eventdata_sourceIp": 8,
+                  "data_eventdata_user": 5,
+                  "rule_description": 4,
+                  "rule_id": 12,
+                  "rule_level": 3,
+                  "timestamp": 0
+                },
+                "renameByName": {
+                  "agent_ip": "AGENT IP",
+                  "agent_name": "AGENT NAME",
+                  "data_eventdata_DestinationIp": "DST IP",
+                  "data_eventdata_commandLine": "COMMANDLINE",
+                  "data_eventdata_currentDirectory": "CURRENT DIRECTORY",
+                  "data_eventdata_destinationHostname": "DST HOSTNAME",
+                  "data_eventdata_destinationPort": "DST PORT",
+                  "data_eventdata_destinationPortName": "DST PORT",
+                  "data_eventdata_image": "PROGRAM",
+                  "data_eventdata_sourceHostname": "SRC HOSTNAME",
+                  "data_eventdata_sourceIp": "SRC IP",
+                  "data_eventdata_user": "USER",
+                  "rule_description": "DESCRIPTION",
+                  "rule_id": "RULE ID",
+                  "rule_level": "LEVEL",
+                  "rule_mitre_id": "MITRE ID",
+                  "rule_mitre_tactic": "MITRE TACTIC",
+                  "rule_mitre_technique": "MITRE TECHNIQUE",
+                  "timestamp": "TIMESTAMP"
+                }
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "LINUX EVENT LOGS - NETWORK",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "e58748f2-1dd5-4e9c-bc24-2ed65f0d6bd8"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "id": 74,
+      "panels": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "blue"
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 0,
+            "y": 3
+          },
+          "id": 43,
+          "links": [],
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "9.4.7",
+          "targets": [
+            {
+              "bucketAggs": [
+                {
+                  "$$hashKey": "object:50",
+                  "field": "timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto",
+                    "min_doc_count": 0,
+                    "trimEdges": 0
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "${DS_WAZUH_- CONTEGO LAB}"
+              },
+              "metrics": [
+                {
+                  "$$hashKey": "object:48",
+                  "field": "select field",
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "rule_groups:*linux* AND agent_name:$agent_name AND (data_system_eventId:11 OR data_system_eventId:16 OR data_system_eventId:23)",
+              "refId": "A",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "LINUX FILES - EVENTS",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": false,
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "blue"
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Count"
+                },
+                "properties": [
+                  {
+                    "id": "custom.cellOptions",
+                    "value": {
+                      "mode": "basic",
+                      "type": "gauge"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 15,
+            "x": 9,
+            "y": 3
+          },
+          "id": 63,
+          "links": [],
+          "maxDataPoints": 3,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "9.4.7",
+          "targets": [
+            {
+              "bucketAggs": [
+                {
+                  "$$hashKey": "object:3082",
+                  "fake": true,
+                  "field": "rule_description",
+                  "id": "4",
+                  "settings": {
+                    "min_doc_count": 0,
+                    "order": "desc",
+                    "orderBy": "_count",
+                    "size": "10"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "$$hashKey": "object:73",
+                  "fake": true,
+                  "field": "rule_level",
+                  "id": "3",
+                  "settings": {
+                    "min_doc_count": 1,
+                    "order": "desc",
+                    "orderBy": "_count",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "${DS_WAZUH_- CONTEGO LAB}"
+              },
+              "metrics": [
+                {
+                  "$$hashKey": "object:71",
+                  "field": "select field",
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "rule_groups:*linux* AND agent_name:$agent_name AND (data_system_eventId:11 OR data_system_eventId:16 OR data_system_eventId:23)",
+              "refId": "A",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "LINUX FILES - EVENTS BY TYPE",
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": false,
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "orange"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 9,
+            "x": 0,
+            "y": 10
+          },
+          "id": 60,
+          "links": [],
+          "maxDataPoints": 3,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "9.4.7",
+          "targets": [
+            {
+              "bucketAggs": [
+                {
+                  "$$hashKey": "object:2063",
+                  "fake": true,
+                  "field": "agent_name",
+                  "id": "4",
+                  "settings": {
+                    "min_doc_count": "1",
+                    "order": "desc",
+                    "orderBy": "_count",
+                    "size": "10"
+                  },
+                  "type": "terms"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "${DS_WAZUH_- CONTEGO LAB}"
+              },
+              "metrics": [
+                {
+                  "$$hashKey": "object:71",
+                  "field": "select field",
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "rule_groups:*linux* AND agent_name:$agent_name AND (data_system_eventId:11 OR data_system_eventId:16 OR data_system_eventId:23)",
+              "refId": "A",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "LINUX FILESS - EVENTS BY AGENT",
+          "type": "table"
+        },
+        {
+          "aliasColors": {},
+          "bars": true,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "fill": 1,
+          "fillGradient": 0,
+          "gridPos": {
+            "h": 7,
+            "w": 15,
+            "x": 9,
+            "y": 10
+          },
+          "hiddenSeries": false,
+          "id": 92,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": false,
+          "linewidth": 1,
+          "links": [],
+          "maxDataPoints": 3,
+          "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
+          "percentage": false,
+          "pluginVersion": "9.4.7",
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": true,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [
+                {
+                  "field": "agent_name",
+                  "id": "4",
+                  "settings": {
+                    "min_doc_count": "1",
+                    "order": "desc",
+                    "orderBy": "_count",
+                    "size": "10"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "field": "timestamp",
+                  "id": "5",
+                  "settings": {
+                    "interval": "auto",
+                    "min_doc_count": "0",
+                    "trimEdges": "0"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "${DS_WAZUH_- CONTEGO LAB}"
+              },
+              "metrics": [
+                {
+                  "$$hashKey": "object:71",
+                  "field": "select field",
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "rule_groups:*linux* AND agent_name:$agent_name AND (data_system_eventId:11 OR data_system_eventId:16 OR data_system_eventId:23)",
+              "refId": "A",
+              "timeField": "timestamp"
+            }
+          ],
+          "thresholds": [],
+          "timeRegions": [],
+          "title": "LINUX FILES - EVENTS BY AGENT (HISTOGRAM)",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "logBase": 1,
+              "show": true
+            },
+            {
+              "format": "short",
+              "logBase": 1,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false
+          }
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_WAZUH_- CONTEGO LAB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "rule_level"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 93
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "windows_event_id"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 186
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "DATE/TIME"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 202
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "AGENT"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 171
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "SRC IP"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 167
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "MESSAGE"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 1519
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "rule_description"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 524
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "RULE LEVEL"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 196
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "EVENT ID"
+                },
+                "properties": [
+                  {
+                    "id": "links",
+                    "value": [
+                      {
+                        "targetBlank": true,
+                        "title": "VIEW EVENT DETAILS",
+                        "url": "https://myservice.socfortress.co/explore?left=%7B%22datasource%22:%22WAZUH%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22query%22:%22_id:${__value.text}%22,%22alias%22:%22%22,%22metrics%22:%5B%7B%22id%22:%221%22,%22type%22:%22logs%22,%22settings%22:%7B%22limit%22:%22500%22%7D%7D%5D,%22bucketAggs%22:%5B%5D,%22timeField%22:%22timestamp%22%7D%5D,%22range%22:%7B%22from%22:%22now-6h%22,%22to%22:%22now%22%7D%7D"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 17
+          },
+          "id": 122,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "9.4.7",
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "${DS_WAZUH_- CONTEGO LAB}"
+              },
+              "metrics": [
+                {
+                  "id": "1",
+                  "settings": {
+                    "size": "500"
+                  },
+                  "type": "raw_data"
+                }
+              ],
+              "query": "rule_groups:*linux* AND agent_name:$agent_name AND (data_system_eventId:11 OR data_system_eventId:16 OR data_system_eventId:23)",
+              "queryType": "randomWalk",
+              "refId": "A",
+              "timeField": "timestamp"
+            }
+          ],
+          "title": "LINUX FILES - EVENTS",
+          "transformations": [
+            {
+              "id": "filterFieldsByName",
+              "options": {
+                "include": {
+                  "names": [
+                    "timestamp",
+                    "agent_ip",
+                    "agent_name",
+                    "data_eventdata_image",
+                    "data_eventdata_user",
+                    "rule_description",
+                    "rule_id",
+                    "rule_level",
+                    "rule_mitre_id",
+                    "rule_mitre_tactic",
+                    "rule_mitre_technique",
+                    "data_eventdata_isExecutable",
+                    "data_eventdata_targetFilename"
+                  ]
+                }
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "rule_id": true
+                },
+                "indexByName": {
+                  "agent_ip": 1,
+                  "agent_name": 2,
+                  "data_eventdata_image": 6,
+                  "data_eventdata_isExecutable": 8,
+                  "data_eventdata_targetFilename": 7,
+                  "data_eventdata_user": 5,
+                  "rule_description": 4,
+                  "rule_id": 9,
+                  "rule_level": 3,
+                  "rule_mitre_id": 10,
+                  "rule_mitre_tactic": 11,
+                  "rule_mitre_technique": 12,
+                  "timestamp": 0
+                },
+                "renameByName": {
+                  "agent_ip": "AGENT IP",
+                  "agent_name": "AGENT NAME",
+                  "data_eventdata_commandLine": "COMMANDLINE",
+                  "data_eventdata_currentDirectory": "CURRENT DIRECTORY",
+                  "data_eventdata_image": "PROGRAM",
+                  "data_eventdata_isExecutable": "IS EXECUTABLE",
+                  "data_eventdata_targetFilename": "TARGET FILE",
+                  "data_eventdata_user": "USER",
+                  "rule_description": "DESCRIPTION",
+                  "rule_id": "RULE ID",
+                  "rule_level": "LEVEL",
+                  "rule_mitre_id": "MITRE ID",
+                  "rule_mitre_tactic": "MITRE TACTIC",
+                  "rule_mitre_technique": "MITRE TECHNIQUE",
+                  "timestamp": "TIMESTAMP"
+                }
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "LINUX EVENT LOGS - FILES ",
+      "type": "row"
+    }
+  ],
+  "refresh": "",
+  "revision": 1,
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "e58748f2-1dd5-4e9c-bc24-2ed65f0d6bd8"
+        },
+        "filters": [],
+        "hide": 0,
+        "label": "",
+        "name": "Filters",
+        "skipUrlSync": false,
+        "type": "adhoc"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "${DS_WAZUH_- CONTEGO LAB}"
+        },
+        "definition": "{ \"find\": \"terms\", \"field\": \"agent_name\", \"query\": \"rule_groups:*linux*\"}\n",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Agent",
+        "multi": false,
+        "name": "agent_name",
+        "options": [],
+        "query": "{ \"find\": \"terms\", \"field\": \"agent_name\", \"query\": \"rule_groups:*linux*\"}\n",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 2,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "Linux Event Logs",
+  "uid": "Hofcvsqnk2312",
+  "version": 6,
+  "weekStart": ""
+}
